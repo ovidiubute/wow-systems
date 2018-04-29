@@ -2,18 +2,28 @@ import Item from "./Item";
 
 export default class Bag {
   private storage: Item[];
-  public readonly size: number;
+  private emptySlots: number;
+  public readonly slots: number;
 
-  constructor(size: number) {
-    if (size <= 0 || !Number.isInteger(size)) {
-      throw new Error("Size must be a positive integer!");
+  constructor(slots: number) {
+    if (slots <= 0 || !Number.isInteger(slots)) {
+      throw new Error("Slots must be a positive integer!");
     }
 
-    this.size = size;
+    this.slots = slots;
+    this.emptySlots = slots;
     this.storage = new Array<Item>();
   }
 
-  public put(item: Item): void {}
+  public put(item: Item): void {
+    if (!this.emptySlots) {
+      throw new Error("Bag is full!");
+    }
+  }
+
+  public isFull(): boolean {
+    return this.emptySlots > 0;
+  }
 
   public take(position: number): Item {
     return new Item();
