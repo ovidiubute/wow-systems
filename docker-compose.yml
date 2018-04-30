@@ -1,0 +1,10 @@
+version: '3'
+volumes:
+  node_modules: 
+services:
+  dev:
+    build: .
+    volumes:
+      - '.:/usr/src/app'
+      - 'node_modules:/usr/src/app/node_modules'
+    command: bash -c "yarn install && sleep 1000000000000000"
