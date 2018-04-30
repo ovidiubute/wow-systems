@@ -1,7 +1,10 @@
 {
-	"folders": [
-		{
-			"path": "inventory"
-		}
-	]
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "git.ignoreLimitWarning": true
+  }
 }
