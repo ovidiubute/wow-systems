@@ -1,5 +1,7 @@
+type Nullable<T> = T | null;
+
 export default class Bag<T> {
-  private storage: T[] = [];
+  private storage: Nullable<T>[] = [];
   private emptySlots: number;
   public readonly size: number;
 
@@ -10,7 +12,7 @@ export default class Bag<T> {
 
     this.size = size;
     this.emptySlots = size;
-    // this.storage.fill(null, 0, size - 1);
+    this.storage.fill(null, 0, size - 1);
   }
 
   public put(item: T): void {
@@ -24,10 +26,12 @@ export default class Bag<T> {
   }
 
   public take(position: number): T {
-    // if (this.storage[position] instanceof T) {
-    //   throw new Error(`No item found at position: ${position}`);
-    // } else {
-    return this.storage[position];
-    // }
+    const x = this.storage[position];
+
+    if (x === null) {
+      throw new Error(`No item found at position: ${position}`);
+    }
+
+    return x;
   }
 }
