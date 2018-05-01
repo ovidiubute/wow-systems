@@ -1,7 +1,5 @@
-import Item from "./Item";
-
-export default class Bag {
-  private storage: Item[];
+export default class Bag<T> {
+  private storage: T[] = [];
   private emptySlots: number;
   public readonly size: number;
 
@@ -12,10 +10,10 @@ export default class Bag {
 
     this.size = size;
     this.emptySlots = size;
-    this.storage = new Array<Item>().fill(null, 0, size - 1);
+    // this.storage.fill(null, 0, size - 1);
   }
 
-  public put(item: Item): void {
+  public put(item: T): void {
     if (!this.emptySlots) {
       throw new Error("Bag is full!");
     }
@@ -25,9 +23,11 @@ export default class Bag {
     return this.emptySlots > 0;
   }
 
-  public take(position: number): Item {
-    if (this.storage[position] === null) {
-      throw new Error(`No item found at position: ${position}`);
-    }
+  public take(position: number): T {
+    // if (this.storage[position] instanceof T) {
+    //   throw new Error(`No item found at position: ${position}`);
+    // } else {
+    return this.storage[position];
+    // }
   }
 }
