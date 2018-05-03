@@ -1,9 +1,19 @@
 import ItemQuality from "./ItemQuality";
 
-export default class Item {
+export abstract class Item {
   name: string;
-  stackable: boolean;
   level: number;
+
+  constructor(name: string, level: number) {
+    this.name = name;
+    this.level = level;
+  }
+
+  protected abstract clone(): Item;
+}
+
+export default class SimpleItem extends Item {
+  stackable: boolean;
   quality: ItemQuality;
 
   constructor(
@@ -12,9 +22,13 @@ export default class Item {
     level: number,
     quality: ItemQuality
   ) {
-    this.name = name;
+    super(name, level);
+
     this.stackable = stackable;
-    this.level = level;
     this.quality = quality;
+  }
+
+  public clone(): Item {
+    return new SimpleItem(this.name, this.stackable, this.level, this.quality);
   }
 }

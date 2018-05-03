@@ -1,7 +1,7 @@
-type Nullable<T> = T | null;
+import Item from "./Item";
 
-export default class Bag<T> {
-  private storage: Nullable<T>[] = [];
+export default class Bag<T extends Item> {
+  private storage: T[];
   private emptySlots: number;
   public readonly size: number;
 
@@ -12,20 +12,31 @@ export default class Bag<T> {
 
     this.size = size;
     this.emptySlots = size;
-    this.storage.fill(null, 0, size - 1);
+    this.storage = new Array<T>(size);
   }
 
-  public put(item: T): void {
+  public put(item: T): Bag<T> {
     if (!this.emptySlots) {
       throw new Error("Bag is full!");
     }
+
+    for (let i = 0; i < this.size; i++) {
+      let x = this.storage[i];
+      if (x === null) {
+        x = item.clone() as T;
+        this.emptySlots--;
+        return this;
+      }
+    }
+
+    return this;
   }
 
   public isFull(): boolean {
     return this.emptySlots > 0;
   }
 
-  public take(position: number): T {
+  public peek(position: number): T {
     const x = this.storage[position];
 
     if (x === null) {
